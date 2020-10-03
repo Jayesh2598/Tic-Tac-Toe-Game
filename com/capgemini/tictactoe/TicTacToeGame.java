@@ -1,10 +1,14 @@
 package com.capgemini.tictactoe;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToeGame {
-
+	
+	private static final Random ran=new Random();
 	private static final Scanner SC = new Scanner(System.in);
+	private static final int HEAD=1;
+	private static final int TAIL=0;
 	public static char[] board=new char[10];
 	public static char player;
 	public static char computer;
@@ -16,10 +20,16 @@ public class TicTacToeGame {
 		computer = (player == 'o')?'x':'o';
 		System.out.println("Player letter is '" + player + "' and computer letter is '" + computer + "'");
 		displayBoard(board);
-		int index= playerIndex();
-		if(isFree(board,index))
-			displayBoard(playerMove(board, index));
-		
+		if(toss()==HEAD) {
+			System.out.println("Computer plays first.");
+			displayBoard(computerMove(board));
+		}	
+		else {
+			System.out.println("Player plays first.");
+			int playerIndex= playerIndex();
+			if(isFree(board,playerIndex))
+				displayBoard(playerMove(board, playerIndex));
+		}
 	}
 
 	// creating empty board character array
@@ -75,10 +85,27 @@ public class TicTacToeGame {
 		return board[index]=='\0';
 	}
 	
-	//Making move if index is free
+	//Tossing a coin
+	private static int toss() {
+		return ran.nextInt(2);
+	}
+	
+	//Player plays
 	private static char[] playerMove(char[] board, int index) {
 		if(isFree(board,index))
 			board[index]=player;
+		return board;
+	}
+	
+	//Computer plays
+	private static char[] computerMove(char[] board) {
+		while(true) {
+			int computerIndex= ran.nextInt(9)+1;
+			if(isFree(board,computerIndex)) {
+				board[computerIndex]=computer;
+				break;
+			}	
+		}	
 		return board;
 	}
 }
