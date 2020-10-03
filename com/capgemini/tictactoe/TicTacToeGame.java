@@ -16,7 +16,9 @@ public class TicTacToeGame {
 		computer = (player == 'o')?'x':'o';
 		System.out.println("Player letter is '" + player + "' and computer letter is '" + computer + "'");
 		displayBoard(board);
-		System.out.println(isFree(board, playerIndex()));
+		int index= playerIndex();
+		if(isFree(board,index))
+			displayBoard(playerMove(board, index));
 		
 	}
 
@@ -71,5 +73,12 @@ public class TicTacToeGame {
 	//Checking if index position is free
 	private static boolean isFree(char[] board, int index) {
 		return board[index]=='\0';
+	}
+	
+	//Making move if index is free
+	private static char[] playerMove(char[] board, int index) {
+		if(isFree(board,index))
+			board[index]=player;
+		return board;
 	}
 }
