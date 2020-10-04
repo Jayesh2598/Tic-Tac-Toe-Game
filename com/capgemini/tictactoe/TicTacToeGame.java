@@ -1,5 +1,6 @@
 package com.capgemini.tictactoe;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.TreeSet;
@@ -10,9 +11,9 @@ public class TicTacToeGame {
 	private static final Scanner SC = new Scanner(System.in);
 	private static final int HEAD = 1;
 	private static final int TAIL = 0;
-	public static char[] board = new char[10];
-	public static char player;
-	public static char computer;
+	private static char[] board = new char[10];
+	private static char player;
+	private static char computer;
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe Game!");
@@ -47,7 +48,7 @@ public class TicTacToeGame {
 				chance = true;
 			}
 			displayBoard(board);
-			status = gameStatus(board);						 // status == 1 in tie situation and 2 in win situation
+			status = gameStatus(board); 					// status == 1 in tie situation and 2 in win situation
 		}
 		switch (status) {
 		case 1:
@@ -131,18 +132,21 @@ public class TicTacToeGame {
 
 	// Computer plays
 	private static char[] computerMove(char[] board) {
-		// TreeSet<Integer> winIndices= checkMyWin(board);
 		int winIndex = checkMyWin(board);
 		if (winIndex == 0) {
 			int blockIndex = blockPlayerWin(board);
 			if (blockIndex == 0) {
-				while (true) {
-					int computerIndex = ran.nextInt(9) + 1;
-					if (isFree(board, computerIndex)) {
-						board[computerIndex] = computer;
-						break;
+				int emptyCorner = chooseCorners(board);
+				if (emptyCorner == 0) {
+					while (true) {
+						int computerIndex = ran.nextInt(9) + 1;
+						if (isFree(board, computerIndex)) {
+							board[computerIndex] = computer;
+							break;
+						}
 					}
-				}
+				} else
+					board[emptyCorner] = computer;
 			} else
 				board[blockIndex] = computer;
 		} else
@@ -217,6 +221,26 @@ public class TicTacToeGame {
 			int randomIndex = ran.nextInt(list.size());
 			Integer[] blockIndices = list.toArray(new Integer[list.size()]);
 			return blockIndices[randomIndex].intValue();
+		}
+	}
+
+	// Choose available corners
+	private static int chooseCorners(char[] board) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		if (board[1] == '\0')
+			list.add(1);
+		if (board[3] == '\0')
+			list.add(3);
+		if (board[7] == '\0')
+			list.add(7);
+		if (board[9] == '\0')
+			list.add(9);
+		if (list.isEmpty())
+			return 0;
+		else {
+			int randomIndex = ran.nextInt(list.size());
+			Integer[] emptyCorners = list.toArray(new Integer[list.size()]);
+			return emptyCorners[randomIndex].intValue();
 		}
 	}
 }
