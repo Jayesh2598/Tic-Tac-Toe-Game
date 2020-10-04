@@ -17,49 +17,66 @@ public class TicTacToeGame {
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe Game!");
-		board = createBoard();
-		player = chooseLetter();
-		computer = (player == 'o') ? 'x' : 'o';
-		System.out.println("Player letter is '" + player + "' and computer letter is '" + computer + "'");
-		displayBoard(board);
-		int firstChance = toss(); 								// Determining first turn using a toss
-		boolean chance = true;
-		switch (firstChance) {
-		case HEAD:
-			System.out.println("\nComputer plays first.");
-			displayBoard(computerMove(board));
-			chance = true;
-			break;
-		case TAIL:
-			System.out.println("\nPlayer plays first.");
-			displayBoard(playerMove(board, playerIndex(board)));
-			chance = false;
-			break;
-		}
-		int status = 0;
-		while (status == 0) { 									// Player plays when chance == true and computer plays when chance == false
-			if (chance) {
-				System.out.println("\nPlayer plays.");
-				board = playerMove(board, playerIndex(board));
-				chance = false;
-			} else {
-				System.out.println("\nComputer plays.");
-				board = computerMove(board);
-				chance = true;
-			}
+		boolean another=true;
+		while(another) {
+			board = createBoard();
+			player = chooseLetter();
+			computer = (player == 'o') ? 'x' : 'o';
+			System.out.println("Player letter is '" + player + "' and computer letter is '" + computer + "'");
 			displayBoard(board);
-			status = gameStatus(board); 						// status == 1 in tie situation and 2 in win situation
-		}
-		switch (status) {
-		case 1:
-			System.out.println("It's a tie.");
-			break;
-		case 2:
-			if (chance) 										// if chance == true, last chance was of computer
-				System.out.println("\n*****Computer wins!*****");
-			else 												// if chance == false, last chance was of player
-				System.out.println("\n*****Player wins!*****");
-			break;
+			int firstChance = toss(); 								// Determining first turn using a toss
+			boolean chance = true;
+			switch (firstChance) {
+			case HEAD:
+				System.out.println("\nComputer plays first.");
+				displayBoard(computerMove(board));
+				chance = true;
+				break;
+			case TAIL:
+				System.out.println("\nPlayer plays first.");
+				displayBoard(playerMove(board, playerIndex(board)));
+				chance = false;
+				break;
+			}
+			int status = 0;
+			while (status == 0) { 									// Player plays when chance == true and computer plays when chance == false
+				if (chance) {
+					System.out.println("\nPlayer plays.");
+					board = playerMove(board, playerIndex(board));
+					chance = false;
+				} else {
+					System.out.println("\nComputer plays.");
+					board = computerMove(board);
+					chance = true;
+				}
+				displayBoard(board);
+				status = gameStatus(board); 						// status == 1 in tie situation and 2 in win situation
+			}
+			switch (status) {
+			case 1:
+				System.out.println("It's a tie.");
+				break;
+			case 2:
+				if (chance) 										// if chance == true, last chance was of computer
+					System.out.println("\n*****Computer wins!*****");
+				else 												// if chance == false, last chance was of player
+					System.out.println("\n*****Player wins!*****");
+				break;
+			}
+			
+			while(true) {
+				System.out.println("Do you want to play another game? (y/n)");
+				char anotherGame= SC.next().toLowerCase().charAt(0);
+				if(anotherGame=='y' || anotherGame=='n') {
+					if(anotherGame=='n') {
+						System.out.println("Thank you for using the application!");
+						another=false;
+					}	
+					break;
+				}	
+				else
+					System.out.println("Invalid character. Please enter y/n.");
+			}
 		}
 	}
 
