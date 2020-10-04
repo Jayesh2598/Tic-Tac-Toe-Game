@@ -17,14 +17,14 @@ public class TicTacToeGame {
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe Game!");
-		boolean another=true;
-		while(another) {
+		boolean another = true;
+		while (another) {
 			board = createBoard();
 			player = chooseLetter();
 			computer = (player == 'o') ? 'x' : 'o';
 			System.out.println("Player letter is '" + player + "' and computer letter is '" + computer + "'");
 			displayBoard(board);
-			int firstChance = toss(); 								// Determining first turn using a toss
+			int firstChance = toss(); 											// Determining first turn using a toss
 			boolean chance = true;
 			switch (firstChance) {
 			case HEAD:
@@ -39,7 +39,7 @@ public class TicTacToeGame {
 				break;
 			}
 			int status = 0;
-			while (status == 0) { 									// Player plays when chance == true and computer plays when chance == false
+			while (status == 0) { 												// Player plays when chance == true and computer plays when chance == false
 				if (chance) {
 					System.out.println("\nPlayer plays.");
 					board = playerMove(board, playerIndex(board));
@@ -50,31 +50,30 @@ public class TicTacToeGame {
 					chance = true;
 				}
 				displayBoard(board);
-				status = gameStatus(board); 						// status == 1 in tie situation and 2 in win situation
+				status = gameStatus(board); 									// status == 1 in tie situation and 2 in win situation
 			}
 			switch (status) {
 			case 1:
 				System.out.println("It's a tie.");
 				break;
 			case 2:
-				if (chance) 										// if chance == true, last chance was of computer
+				if (chance) 													// if chance == true, last chance was of computer
 					System.out.println("\n*****Computer wins!*****");
-				else 												// if chance == false, last chance was of player
+				else 															// if chance == false, last chance was of player
 					System.out.println("\n*****Player wins!*****");
 				break;
 			}
-			
-			while(true) {
+
+			while (true) {
 				System.out.println("Do you want to play another game? (y/n)");
-				char anotherGame= SC.next().toLowerCase().charAt(0);
-				if(anotherGame=='y' || anotherGame=='n') {
-					if(anotherGame=='n') {
+				char anotherGame = SC.next().toLowerCase().charAt(0);
+				if (anotherGame == 'y' || anotherGame == 'n') {
+					if (anotherGame == 'n') {
 						System.out.println("Thank you for using the application!");
-						another=false;
-					}	
+						another = false;
+					}
 					break;
-				}	
-				else
+				} else
 					System.out.println("Invalid character. Please enter y/n.");
 			}
 		}
@@ -155,8 +154,8 @@ public class TicTacToeGame {
 			if (blockIndex == 0) {
 				int emptyCorner = chooseCorners(board);
 				if (emptyCorner == 0) {
-					int place=chooseCentreOrSide(board);
-					board[place]=computer;
+					int place = chooseCentreOrSide(board);
+					board[place] = computer;
 				} else
 					board[emptyCorner] = computer;
 			} else
@@ -255,10 +254,10 @@ public class TicTacToeGame {
 			return emptyCorners[randomIndex].intValue();
 		}
 	}
-	
+
 	// Choose centre if empty, else a side
 	private static int chooseCentreOrSide(char[] board) {
-		if(board[5]=='\0')
+		if (board[5] == '\0')
 			return 5;
 		else {
 			ArrayList<Integer> list = new ArrayList<Integer>();
