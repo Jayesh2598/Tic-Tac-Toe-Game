@@ -56,9 +56,9 @@ public class TicTacToeGame {
 			break;
 		case 2:
 			if (chance) 									// if chance == true, last chance was of computer
-				System.out.println("*****Computer wins!*****");
+				System.out.println("\n*****Computer wins!*****");
 			else 											// if chance == false, last chance was of player
-				System.out.println("*****Player wins!*****");
+				System.out.println("\n*****Player wins!*****");
 			break;
 		}
 	}
@@ -138,13 +138,8 @@ public class TicTacToeGame {
 			if (blockIndex == 0) {
 				int emptyCorner = chooseCorners(board);
 				if (emptyCorner == 0) {
-					while (true) {
-						int computerIndex = ran.nextInt(9) + 1;
-						if (isFree(board, computerIndex)) {
-							board[computerIndex] = computer;
-							break;
-						}
-					}
+					int place=chooseCentreOrSide(board);
+					board[place]=computer;
 				} else
 					board[emptyCorner] = computer;
 			} else
@@ -241,6 +236,26 @@ public class TicTacToeGame {
 			int randomIndex = ran.nextInt(list.size());
 			Integer[] emptyCorners = list.toArray(new Integer[list.size()]);
 			return emptyCorners[randomIndex].intValue();
+		}
+	}
+	
+	// Choose centre if empty, else a side
+	private static int chooseCentreOrSide(char[] board) {
+		if(board[5]=='\0')
+			return 5;
+		else {
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			if (board[2] == '\0')
+				list.add(2);
+			if (board[4] == '\0')
+				list.add(4);
+			if (board[6] == '\0')
+				list.add(6);
+			if (board[8] == '\0')
+				list.add(8);
+			int randomIndex = ran.nextInt(list.size());
+			Integer[] emptySides = list.toArray(new Integer[list.size()]);
+			return emptySides[randomIndex].intValue();
 		}
 	}
 }
