@@ -22,7 +22,7 @@ public class TicTacToeGame {
 		computer = (player == 'o') ? 'x' : 'o';
 		System.out.println("Player letter is '" + player + "' and computer letter is '" + computer + "'");
 		displayBoard(board);
-		int firstChance = toss(); 							// Determining first turn using a toss
+		int firstChance = toss(); 								// Determining first turn using a toss
 		boolean chance = true;
 		switch (firstChance) {
 		case HEAD:
@@ -37,7 +37,7 @@ public class TicTacToeGame {
 			break;
 		}
 		int status = 0;
-		while (status == 0) { 								// Player plays when chance == true and computer plays when chance == false
+		while (status == 0) { 									// Player plays when chance == true and computer plays when chance == false
 			if (chance) {
 				System.out.println("\nPlayer plays.");
 				board = playerMove(board, playerIndex(board));
@@ -48,16 +48,16 @@ public class TicTacToeGame {
 				chance = true;
 			}
 			displayBoard(board);
-			status = gameStatus(board); 					// status == 1 in tie situation and 2 in win situation
+			status = gameStatus(board); 						// status == 1 in tie situation and 2 in win situation
 		}
 		switch (status) {
 		case 1:
 			System.out.println("It's a tie.");
 			break;
 		case 2:
-			if (chance) 									// if chance == true, last chance was of computer
+			if (chance) 										// if chance == true, last chance was of computer
 				System.out.println("\n*****Computer wins!*****");
-			else 											// if chance == false, last chance was of player
+			else 												// if chance == false, last chance was of player
 				System.out.println("\n*****Player wins!*****");
 			break;
 		}
